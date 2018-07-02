@@ -210,7 +210,7 @@ class Phone(object):
 
     @classmethod
     def sql_conn(cls):  # 连接数据库
-        cls.mysql = pymysql.connect(host='54.176.208.157', port=3306, user='admin', passwd='131415', db='orders')
+        cls.mysql = pymysql.connect(host='', port=3306, user='', passwd='', db='orders')
         cls.cur = cls.mysql.cursor()
 
     @classmethod
