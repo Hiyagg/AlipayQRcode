@@ -4,7 +4,7 @@ import time
 from config import phonelist
 import threading
 
-d = [u2.connect(i['ip']) for i in phonelist] #手机列表
+d = [u2.connect(i['ip']) for i in phonelist]  # 手机列表
 
 
 def getqr(d, user, account, qrmoney, qrnum):
@@ -26,26 +26,27 @@ def getqr(d, user, account, qrmoney, qrnum):
     time.sleep(0.5)
     d(text='清除金额').click()
     time.sleep(0.2)
+
     print('账户%s正在扫描二维码' % account)
     d.app_start('mark.qrcode')
-    time.sleep(1)
+    time.sleep(0.5)
     d(text='从图库扫描…').click()
 
-    if account == '001':
+    if account == '001':  # 三星
         time.sleep(0.2)
         d.tap(0.26, 0.32)
-    elif account == '002':
+    elif account == '003':  # 小米
         time.sleep(0.5)
         d.tap(0.282, 0.814)
         time.sleep(0.2)
         d.tap(0.125, 0.3)
-    elif account == '003':
+    elif account == '002':  # 中兴
         time.sleep(0.5)
         d.tap(0.26, 0.3)
     time.sleep(0.5)
     print('账户%s正在解析二维码' % account)
     url = d(resourceId="mark.qrcode:id/p").get_text()
-    time.sleep(0.5)
+    time.sleep(0.2)
     d.press('back')
     return user+account+qrmoney+qrnum+'    '+url
 
@@ -61,7 +62,7 @@ def creatbill(i, user, account):
     t0 = time.time()
     for qrmoney in [x for x in range(10, 21) if x % 10 == 0]:  # 金额，单位分，七位数
         qrmoney = "%07d" % qrmoney
-        for qrnum in range(1, 6):  # 某金额二维码编号，两位数
+        for qrnum in range(1, 3):  # 某金额二维码编号，两位数
             qrnum = "%02d" % qrnum
             qrcode=getqr(d[i], user, account, qrmoney, qrnum)  # 生成一个二维码
             print('账户%s正在保存二维码' % account)
